@@ -7,13 +7,13 @@ export const TYPE_TIME_DICTIONARY = {
   },
   BREAK: {
     slug: "BREAK",
-    time: 5 * 60,
+    time: 15 * 60,
     name: "Break",
     backgroundColor: "green",
   },
   "SHORT BREAK": {
     slug: "SHORT BREAK",
-    time: 15 * 60,
+    time: 5 * 60,
     name: "Short Break",
     backgroundColor: "yellow",
   },
