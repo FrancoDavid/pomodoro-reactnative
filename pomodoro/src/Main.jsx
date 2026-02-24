@@ -2,7 +2,6 @@ import { View } from "react-native";
 import { StatusBar } from "expo-status-bar";
 import { useState } from "react";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
-import { Audio } from "expo-av";
 
 import Header from "./components/Header";
 import Timer from "./components/Timer";
@@ -13,22 +12,35 @@ import { TYPE_TIME_DICTIONARY } from "./config/constants";
 export default function Main({ setBackgroundColor }) {
   const INSETS = useSafeAreaInsets();
 
-  const [isWorking, setIsWorking] = useState(false);
   const [time, setTime] = useState(TYPE_TIME_DICTIONARY.POMO.time);
-  const [isActive, setIsActive] = useState(false);
   const [currentTime, setCurrentTime] = useState(
     TYPE_TIME_DICTIONARY.POMO.slug ||
       TYPE_TIME_DICTIONARY.BREAK.slug ||
       TYPE_TIME_DICTIONARY["SHORT BREAK"].slug,
   );
+  const [mainInterval, setMainInterval] = useState(null);
+  const [isTimerRunning, setTimerRunning] = useState(false);
 
-  async function playSound() {
-    const { sound } = await Audio.Sound.createAsync(
-      require("../assets/timer-cocina-.mp3"),
-    );
+  const handleChangesTabs = (slug) => {
+    setCurrentTime(slug);
+    setTime(TYPE_TIME_DICTIONARY[slug].time);
+    setBackgroundColor(TYPE_TIME_DICTIONARY[slug].backgroundColor);
+  };
 
-    await sound.playAsync();
-  }
+  const handleButtonPress = (running) => {
+    if (!running) {
+      setMainInterval(
+        setInterval(() => {
+          setTime((prev) => prev - 1);
+        }, 1000),
+      );
+    } else {
+      clearInterval(mainInterval);
+      setMainInterval(null);
+      setTime(TYPE_TIME_DICTIONARY[currentTime].time);
+    }
+  };
+
   return (
     <View
       style={{
@@ -41,19 +53,14 @@ export default function Main({ setBackgroundColor }) {
       <StatusBar style="auto" />
       <Header
         currentTime={currentTime}
-        onChangeTabs={(slug) => {
-          setCurrentTime(slug);
-          setTime(TYPE_TIME_DICTIONARY[slug].time);
-          setBackgroundColor(TYPE_TIME_DICTIONARY[slug].backgroundColor);
-        }}
+        onChangeTabs={handleChangesTabs}
+        isRunning={isTimerRunning}
       />
       <Timer time={time} />
       <Button
-        isActive={isActive}
-        onPress={() => {
-          setIsActive(!isActive);
-          playSound();
-        }}
+        isRunning={isTimerRunning}
+        onPress={handleButtonPress}
+        setTimerRunning={setTimerRunning}
       />
     </View>
   );

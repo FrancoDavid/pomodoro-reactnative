@@ -18,3 +18,9 @@ export const TYPE_TIME_DICTIONARY = {
     backgroundColor: "yellow",
   },
 };
+
+export const TYPE_MOMENT_DICTIONARY = {
+  START: "START",
+  STOP: "STOP",
+  END: "END",
+};

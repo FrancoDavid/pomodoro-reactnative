@@ -1,20 +1,29 @@
 import { Text, View, TouchableOpacity, StyleSheet } from "react-native";
 
 import { TYPE_TIME_DICTIONARY } from "../config/constants";
+import { playSoundBip } from "../modules/sound";
 
-export default function Header({ currentTime, onChangeTabs }) {
+export default function Header({ currentTime, onChangeTabs, isRunning }) {
+  const handleChangesTabs = (slug) => () => {
+    playSoundBip();
+    onChangeTabs(slug);
+  };
+  console.log("is running en header", isRunning);
+
   return (
     <View>
       <Text style={styles.title}>Pomodoro</Text>
       <View style={styles.container}>
         {Object.values(TYPE_TIME_DICTIONARY).map((type, index) => (
           <TouchableOpacity
+            disabled={isRunning}
             key={type.slug}
             style={[
               styles.item,
               currentTime === type.slug && styles.activeItem,
+              isRunning && styles.disabledItem,
             ]}
-            onPress={() => onChangeTabs(type.slug)}
+            onPress={handleChangesTabs(type.slug)}
           >
             <Text style={styles.itemText}>{type.name}</Text>
           </TouchableOpacity>
@@ -51,5 +60,8 @@ const styles = StyleSheet.create({
     fontSize: 16,
     color: "black",
     fontWeight: "bold",
+  },
+  disabledItem: {
+    opacity: 0.4,
   },
 });
