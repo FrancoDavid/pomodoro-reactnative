@@ -8,7 +8,6 @@ export default function Header({ currentTime, onChangeTabs, isRunning }) {
     playSoundBip();
     onChangeTabs(slug);
   };
-  console.log("is running en header", isRunning);
 
   return (
     <View>

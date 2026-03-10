@@ -10,13 +10,10 @@ export default function Button({ onPress, isRunning, setTimerRunning }) {
 
   const handlePress = () => {
     setTimerRunning((prev) => !prev);
-    console.log("is running en button", isRunning);
     if (!isRunning) {
-      console.log("start...", isRunning);
       playSoundStart();
       setBtnText(TYPE_MOMENT_DICTIONARY.STOP);
     } else {
-      console.log("stop...", isRunning);
       playSoundStop();
       setBtnText(TYPE_MOMENT_DICTIONARY.START);
     }
