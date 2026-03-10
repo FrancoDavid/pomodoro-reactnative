@@ -34,7 +34,7 @@ const styles = {
     padding: 15,
     borderRadius: 10,
     alignItems: "center",
-    marginTop: 20,
+    marginTop: 30,
   },
   buttonText: {
     fontSize: 18,

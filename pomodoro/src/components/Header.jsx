@@ -1,4 +1,4 @@
-import { Text, View, TouchableOpacity, StyleSheet } from "react-native";
+import { Text, View, TouchableOpacity, StyleSheet, Image } from "react-native";
 
 import { TYPE_TIME_DICTIONARY } from "../config/constants";
 import { playSoundBip } from "../modules/sound";
@@ -11,7 +11,11 @@ export default function Header({ currentTime, onChangeTabs, isRunning }) {
 
   return (
     <View>
-      <Text style={styles.title}>Pomodoro</Text>
+      <View style={styles.logo}>
+        <Text style={styles.title}>Pomodoro</Text>
+        <Image source={require("../../assets/icon.png")} style={styles.image} />
+      </View>
+
       <View style={styles.container}>
         {Object.values(TYPE_TIME_DICTIONARY).map((type, index) => (
           <TouchableOpacity
@@ -41,6 +45,14 @@ const styles = StyleSheet.create({
   },
   container: {
     flexDirection: "row",
+    marginBottom: 40,
+  },
+  logo: {
+    display: "flex",
+    justifyContent: "flex-start",
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 10,
     marginBottom: 20,
   },
   item: {
@@ -62,5 +74,9 @@ const styles = StyleSheet.create({
   },
   disabledItem: {
     opacity: 0.4,
+  },
+  image: {
+    width: 33,
+    height: 33,
   },
 });

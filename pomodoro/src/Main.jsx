@@ -8,6 +8,7 @@ import Timer from "./components/Timer";
 import Button from "./components/Button";
 
 import { TYPE_TIME_DICTIONARY } from "./config/constants";
+import Footer from "./components/Footer";
 
 export default function Main({ setBackgroundColor }) {
   const INSETS = useSafeAreaInsets();
@@ -62,6 +63,7 @@ export default function Main({ setBackgroundColor }) {
         onPress={handleButtonPress}
         setTimerRunning={setTimerRunning}
       />
+      <Footer />
     </View>
   );
 }
